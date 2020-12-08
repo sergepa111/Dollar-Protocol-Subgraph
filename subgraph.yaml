@@ -1,0 +1,27 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: AdminUpgradeabilityProxy
+    network: mainnet
+    source:
+      address: "0x2F6081E3552b1c86cE4479B80062A1ddA8EF23E3"
+      abi: AdminUpgradeabilityProxy
+      startBlock: 10904490
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - AdminChanged
+        - Upgraded
+      abis:
+        - name: AdminUpgradeabilityProxy
+          file: ./abis/AdminUpgradeabilityProxy.json
+      eventHandlers:
+        - event: AdminChanged(address,address)
+          handler: handleAdminChanged
+        - event: Upgraded(indexed address)
+          handler: handleUpgraded
+      file: ./src/mapping.ts
